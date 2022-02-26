@@ -8,17 +8,61 @@
 </head>
 
     <body>
+                     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Best Cars</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/djangoapp">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/djangoapp/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/djangoapp/contact">Contact Us</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: rgb(43, 238, 238);" href="#">{{ user.username }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  style="color: rgb(43, 238, 238);" href="logout/">Logout</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" style="color: rgb(43, 238, 238);" href="add_review/"> Add Review</a>
+                    </li>
+                    {% else %}
+                        <li>
+                                <a class="btn btn-link" href="/djangoapp/login/">Sign In</a>
+                                <a class="btn btn-link" href="/djangoapp/signup/">Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
 
     <!--Add a nav bar here -->
-        <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Dealers</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        </nav>
+
     <!-- Add reviews as cards -->
+    <main class="container" style="padding: 3%;">
+        <div class="card-columns">
+            {% for review in reviews %}
+                <div class="card" style="height: 300px; overflow: scroll; overflow-x: hidden;">
+                    <img src="{{MEDIA_URL}}/emoji/{{review.sentiment}}.png" class="card-img-center" style="height: 100px; width: 100px; margin-left: 35%; margin-bottom: 5%; margin-top: 2%;">
+                    <div class="card-body" style="text-align: center;">
+                        <h5 class="card-title">{{ review.car_make }}, {{ review.car_model }}</h5>
+                        <h5 class="card-title">{{ review.car_year }}</h5>
+                        <p class="card-text">{{ review.review }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
 
     </body>
 
